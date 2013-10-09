@@ -1,0 +1,32 @@
+<svg 
+	version= "1.1"
+	baseProfile= "full"
+	xmlns= "http://www.w3.org/2000/svg"
+	viewBox="0 0 100 100"
+>
+	<rect 
+		width="90"
+		height="90"
+		x="5" y="5" fill="#FF0"
+		onclick= "this.childNodes[1].beginElement()"
+		onmouseover="this.childNodes[3].beginElement()"
+		>
+		<animate
+			attributeType="XML"
+			attributeName="fill"
+			values="#FF0;#F0F;#0FF;#FF0"
+			begin="indefinite" dur="4s"
+			repeatCount="indefinite"
+			fill="freeze"
+		/>
+		<animateTransform
+			attributeName="transform"
+			type="rotate"
+			from="0 50 50"
+			to="360 50 50"
+			begin="indefinite" dur="4s"
+			repeatCount="indefinite"
+			fill="freeze"
+		/>
+	</rect>
+</svg>
