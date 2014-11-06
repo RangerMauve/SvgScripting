@@ -2,9 +2,19 @@ var
 	slideIndex = 0,
 	slide = document.getElementById("slide"+slideIndex),
 	points = slide.querySelectorAll(".point"),
-	point=0;
+	point=0,
+	RIGHT_ARROW = 39,
+	LEFT_ARROW = 37;
 
-window.onclick = function(){
+window.onclick = show_next;
+
+window.onkeydown = function(e){
+	 var key = e.keyCode;
+	if(key === RIGHT_ARROW) show_next();
+	else if(key === LEFT_ARROW) show_previous();
+}
+
+function show_next(){
 	if(point < points.length){
 		points[point++].style.display="inline";
 	} else {
@@ -18,7 +28,19 @@ window.onclick = function(){
 	}
 }
 
-slide.style.display="inline";
+function show_previous(){
+	if(point > 0){
+		points[point--].style.display="none";
+	} else {
+		var newslide = document.getElementById("slide"+(--slideIndex))
+		if(!newslide)return;
+		slide.style.display="none";
+		slide = newslide;
+		slide.style.display="inline"
+		points= slide.querySelectorAll(".point");
+		point=points.length -1;
+	}
+}
 
 var balls;
 function setupBalls(){
@@ -71,10 +93,16 @@ function slide4_addCircle(){
 	if(cont.childNodes.length > 10)
 		cont.removeChild(cont.childNodes[0]);
 }
-document.getElementById("huetrigger").onclick=function(e){
+document.getElementById("huetrigger").addEventListener("click",function(e){
+	e.stopPropagation();
 	document.getElementById('slide4filter').beginElement();
-	e.preventDefault(true);
-}
+	return false
+})
+document.getElementById("click_example").addEventListener("click",function(e){
+	e.stopPropagation();
+	this.setAttribute('fill','#F0F','');
+	return false;
+})
 
 
 // Ball animation in the background
@@ -96,21 +124,20 @@ function animateBalls(){
 			ball.vx*=-1;
 		if((ball.y+ball.r) > 100 && ball.vy > 0)
 			ball.vy*=-1;
-			
+
 		if((ball.x-ball.r) < 0 && ball.vx < 0)
 			ball.vx*=-1;
 		if((ball.y-ball.r) < 0 && ball.vy < 0)
 			ball.vy*=-1;
-		
+
 		ball.x += ball.vx;
 		ball.y += ball.vy;
 	});
 	setTimeout(animateBalls,16);
 }
 
-
 // Initialize everything
-//MauveDrag.init()
+slide.style.display="inline";
 setupBalls();
 animateBalls();
 slide4_update();
